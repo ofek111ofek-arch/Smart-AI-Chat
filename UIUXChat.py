@@ -5,7 +5,7 @@ from chat_loop import call_chat, call_agent
 BASE_URL = "https://server.iac.ac.il/api/v1/studentapi"
 
 # ----------------------------
-# Page configrinuration
+# Page configuration
 # ----------------------------
 st.set_page_config(
     page_title="Smart AI Chat",
@@ -15,7 +15,6 @@ st.set_page_config(
 
 st.title("💬 Smart AI Chat")
 st.caption("Streamlit frontend for Chat Completions and Agentic Responses")
-
 
 # ----------------------------
 # Helper functions
@@ -182,17 +181,16 @@ if user_prompt:
         response_placeholder.markdown("Thinking...")
 
         try:
-            # ----------------------------
-            # קריאה לפונקציות מ-chat_loop.py
-            # ----------------------------
             if st.session_state.mode == "Chat":
                 st.session_state.chat_history_for_api.append(
                     {"role": "user", "content": user_prompt}
                 )
+
                 reply, quota, raw = call_chat(
                     get_headers(),
                     st.session_state.chat_history_for_api
                 )
+
                 if reply:
                     st.session_state.chat_history_for_api.append(
                         {"role": "assistant", "content": reply}
@@ -203,15 +201,17 @@ if user_prompt:
 
             else:
                 with st.spinner("🤖 Thinking..."):
-                   reply, quota, new_id = call_agent(
-                    get_headers(),
-                    user_prompt,
-                    st.session_state.previous_response_id
-                )
-            if reply:
-                st.session_state.previous_response_id = new_id
-            else:
-                raise ValueError("Empty reply from agent API.")
+                    reply, quota, new_id = call_agent(
+                        get_headers(),
+                        user_prompt,
+                        st.session_state.previous_response_id
+                    )
+
+                if reply:
+                    st.session_state.previous_response_id = new_id
+                else:
+                    raise ValueError("Empty reply from agent API.")
+
             if quota:
                 st.session_state.quota_status = quota
 
