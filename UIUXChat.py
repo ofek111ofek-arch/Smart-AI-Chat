@@ -202,16 +202,16 @@ if user_prompt:
                     raise ValueError(f"Empty reply from chat API: {raw}")
 
             else:
-                reply, quota, new_id = call_agent(
+                with st.spinner("🤖 Thinking..."):
+                   reply, quota, new_id = call_agent(
                     get_headers(),
                     user_prompt,
                     st.session_state.previous_response_id
                 )
-                if reply:
-                    st.session_state.previous_response_id = new_id
-                else:
-                    raise ValueError("Empty reply from agent API.")
-
+            if reply:
+                st.session_state.previous_response_id = new_id
+            else:
+                raise ValueError("Empty reply from agent API.")
             if quota:
                 st.session_state.quota_status = quota
 

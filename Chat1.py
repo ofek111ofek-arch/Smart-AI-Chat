@@ -1,6 +1,6 @@
 import requests
 
-headers = {"Authorization": "Bearer sk-std-nWigFa_S1pBK9M149B4JMTlgSLP8v3IAnt_ARJQWFU"}
+headers = {"Authorization": "Bearer sk-std-AUSZLgAoxGXfopNAozhBaFo84WPH7UWg7wcO7yyQ_t0"}
 payload = {
     "messages": [
         {
